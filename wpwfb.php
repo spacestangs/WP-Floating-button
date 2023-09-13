@@ -95,7 +95,7 @@ class WordPressFloatingWhatsappButton {
 		$this->wordpress_floating_whatsapp_button_options = get_option( 'wordpress_floating_whatsapp_button_option_name' ); ?>
 
 		<div class="wrap">
-			<h2>WordPress Floating Whatsapp button</h2>
+			<h2>WPFloating Green button</h2>
 			<p>Made by <strong>alex reznik</strong> feel free to doante</p>
 			<p>Set your button here</p>
 			<?php settings_errors(); ?>
