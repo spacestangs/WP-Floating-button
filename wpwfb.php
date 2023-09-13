@@ -31,7 +31,7 @@ function wpwfb_init()
     load_plugin_textdomain(
         "wpwfb",
         false,
-        "WP-Floating-button/languages/"
+        "WPFloating-button/languages/"
     );
 }
 add_action("init", "wpwfb_init");
