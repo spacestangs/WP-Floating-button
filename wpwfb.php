@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name:  WPGreen Floating button
-Plugin URI:   https://github.com/spacestangs/WordPress-Floating-Whatsapp-button
+Plugin URI:   https://github.com/spacestangs/WP-Floating-button/
 Description:  this plugin will display a floting WhatsApp Button
 Version:      1.0
 Author:       spacestangs
