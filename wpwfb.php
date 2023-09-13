@@ -39,7 +39,7 @@ add_action("init", "wpwfb_init");
 function addcssfiles()
 {
     wp_enqueue_style(
-        "new-style",
+        "style",
         plugins_url("/css/style.css", __FILE__),
         false,
         "1.0.2",
