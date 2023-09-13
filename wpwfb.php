@@ -31,7 +31,7 @@ function wpwfb_init()
     load_plugin_textdomain(
         "wpwfb",
         false,
-        "WP Whatsapp Floating Button/languages/"
+        "WP-Floating-button/languages/"
     );
 }
 add_action("init", "wpwfb_init");
