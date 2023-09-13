@@ -31,7 +31,7 @@ function wpwfb_init()
     load_plugin_textdomain(
         "wpwfb",
         false,
-        "WPFloating-button/languages/"
+        "/languages/"
     );
 }
 add_action("init", "wpwfb_init");
