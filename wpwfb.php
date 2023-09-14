@@ -3,7 +3,7 @@
 Plugin Name:  WPGreen Floating button
 Plugin URI:   https://github.com/spacestangs/WP-Floating-button/
 Description:  this plugin will display a floting WhatsApp Button
-Version:      1.0
+Version:      1.01
 Author:       spacestangs
 Author URI:   https://www.anan.media
 License:      GPL2
@@ -42,7 +42,7 @@ function addcssfiles()
         "style",
         plugins_url("/css/style.css", __FILE__),
         false,
-        "1.0.2",
+        "1.0.5",
         "all"
     );
 }
@@ -53,17 +53,36 @@ function ak_add_floating_info () {
 $wordpress_floating_whatsapp_button_options = get_option( 'wordpress_floating_whatsapp_button_option_name' ); // Array of All Options
 $enter_the_phone_number_with_country_code_but_without_0 = $wordpress_floating_whatsapp_button_options['enter_the_phone_number_with_country_code_but_without_0']; 
 $enter_optional_text_near_the_button_1 = $wordpress_floating_whatsapp_button_options['enter_optional_text_near_the_button_1'];
+$icon_0 = $wordpress_floating_whatsapp_button_options['icon_0'];
+$whatsap = "https://api.whatsapp.com/send?phone=";
+$telegram = "https://t.me/";
+$phone = "tel:";
+$sendto = null;
+$facebook = "https://facebook.com/";
 
-    ?>
-       <div class="sticky-slider">
-		   
-    <?php
-	echo '<a class="sticky-slider" href=https://api.whatsapp.com/send?phone=' .
+$sendto = null;
+    ?> <div class="sticky-slider"> <?php
+	if ($icon_0 === 'fa-whatsapp' ){
+		$sendto = $whatsap;
+	}
+	if ($icon_0 === 'fa-telegram' ){
+		$sendto = $telegram;
+	}
+	if ($icon_0 === 'fa-phone' ){
+		$sendto = $phone;
+	}
+	if ($icon_0 === 'fa-facebook' ){
+		$sendto = $facebook;
+	}
+	echo '<a class="sticky-slider" href='. $sendto .
             $enter_the_phone_number_with_country_code_but_without_0 .
-            '><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/WhatsApp_icon.png/598px-WhatsApp_icon.png" alt="Whatsapp" width="50" height="60">' . $enter_optional_text_near_the_button_1 . 
+            '><i class="fa ' .
+            $icon_0 .
+            '"></i>' . $enter_optional_text_near_the_button_1 . 
             "</a>";
 		echo '</div>';
 }
+
 
 
 /**
@@ -92,23 +111,43 @@ class WordPressFloatingWhatsappButton {
 	}
 
 	public function wordpress_floating_whatsapp_button_create_admin_page() {
-		$this->wordpress_floating_whatsapp_button_options = get_option( 'wordpress_floating_whatsapp_button_option_name' ); ?>
+		$this->wordpress_floating_whatsapp_button_options = get_option( 'wordpress_floating_whatsapp_button_option_name' );
 
-		<div class="wrap">
-			<h2>WPFloating Green button</h2>
-			<p>Made by <strong>alex reznik</strong> feel free to doante</p>
-			<p>Set your button here</p>
-			<?php settings_errors(); ?>
-
-			<form method="post" action="options.php">
-				<?php
+		   ?> <div class="wrap">
+        <h2>WPFloating Green button</h2>
+        <table style="border-collapse: collapse; width: inherit; text-align: left;" border="1">
+            <tbody >
+                <tr>
+                    <p>example&nbsp;</p>
+                </tr>
+                <tr>
+                    <td style="width: 33.6648%;">phone</td>
+                    <td style="width: 66.3352%;">(+972)xxxxxxxx</td>
+                </tr>
+                <tr>
+                    <td style="width: 33.6648%;">whatsapp</td>
+                    <td style="width: 66.3352%;">97252xxxxxxx</td>
+                </tr>
+                <tr>
+                    <td style="width: 33.6648%;">telegram</td>
+                    <td style="width: 66.3352%;">username</td>
+                </tr>
+                <tr>
+                    <td style="width: 33.6648%;">facebook</td>
+                    <td style="width: 66.3352%;">username</td>
+                </tr>
+            </tbody>
+        </table>
+	
+        <p>Set your button here</p> 
+	<p>Made by <a href="https://github.com/spacestangs/"><strong>Spacestangs</strong></a> feel free to do anything with it.</p>
+	<?php settings_errors(); ?> <form method="post" action="options.php"> <?php
 					settings_fields( 'wordpress_floating_whatsapp_button_option_group' );
 					do_settings_sections( 'wordpress-floating-whatsapp-button-admin' );
 					submit_button();
-				?>
-			</form>
-		</div>
-	<?php }
+				?> </form>
+    </div> <?php
+	}
 
 	public function wordpress_floating_whatsapp_button_page_init() {
 		register_setting(
@@ -116,6 +155,13 @@ class WordPressFloatingWhatsappButton {
 			'wordpress_floating_whatsapp_button_option_name', // option_name
 			array( $this, 'wordpress_floating_whatsapp_button_sanitize' ) // sanitize_callback
 		);
+			add_settings_field(
+			'icon_0', // id
+			'MODE', // title
+			array( $this, 'icon_0_callback' ), // callback
+			'wordpress-floating-whatsapp-button-admin', // page
+			'wordpress_floating_whatsapp_button_setting_section' // section
+		);		
 
 		add_settings_section(
 			'wordpress_floating_whatsapp_button_setting_section', // id
@@ -140,6 +186,13 @@ class WordPressFloatingWhatsappButton {
 			'wordpress_floating_whatsapp_button_setting_section' // section
 		);
 	}
+	
+
+	public function icon_0_callback() {
+		?> <select name="wordpress_floating_whatsapp_button_option_name[icon_0]" id="icon_0"> <?php $selected = (isset( $this->wordpress_floating_whatsapp_button_options['icon_0'] ) && $this->wordpress_floating_whatsapp_button_options['icon_0'] === 'fa-whatsapp') ? 'selected' : '' ;
+		   ?> <option value="fa-whatsapp" <?php echo $selected; ?>>whatsapp</option> <?php $selected = (isset( $this->wordpress_floating_whatsapp_button_options['icon_0'] ) && $this->wordpress_floating_whatsapp_button_options['icon_0'] === 'fa-phone') ? 'selected' : '' ; ?> <option value="fa-phone" <?php echo $selected; ?>>phone</option> <?php $selected = (isset( $this->wordpress_floating_whatsapp_button_options['icon_0'] ) && $this->wordpress_floating_whatsapp_button_options['icon_0'] === 'fa-telegram') ? 'selected' : '' ; ?> <option value="fa-telegram" <?php echo $selected; ?>>telegram</option> <?php $selected = (isset( $this->wordpress_floating_whatsapp_button_options['icon_0'] ) && $this->wordpress_floating_whatsapp_button_options['icon_0'] === 'fa-facebook') ? 'selected' : '' ; ?> <option value="fa-facebook" <?php echo $selected; ?>>facebook</option>
+    </select> <?php
+	}
 
 	public function wordpress_floating_whatsapp_button_sanitize($input) {
 		$sanitary_values = array();
@@ -149,6 +202,9 @@ class WordPressFloatingWhatsappButton {
 
 		if ( isset( $input['enter_optional_text_near_the_button_1'] ) ) {
 			$sanitary_values['enter_optional_text_near_the_button_1'] = sanitize_text_field( $input['enter_optional_text_near_the_button_1'] );
+		}
+		if ( isset( $input['icon_0'] ) ) {
+			$sanitary_values['icon_0'] = $input['icon_0'];
 		}
 
 		return $sanitary_values;
@@ -181,4 +237,5 @@ if ( is_admin() )
  * $wordpress_floating_whatsapp_button_options = get_option( 'wordpress_floating_whatsapp_button_option_name' ); // Array of All Options
  * $enter_the_phone_number_with_country_code_but_without_0 = $wordpress_floating_whatsapp_button_options['enter_the_phone_number_with_country_code_but_without_0']; // Enter the Phone number with country code but without +
  * $enter_optional_text_near_the_button_1 = $wordpress_floating_whatsapp_button_options['enter_optional_text_near_the_button_1']; // enter optional text near the button
+ * $icon_0 = $wordpress_floating_whatsapp_button_options['icon_0'];
  */
