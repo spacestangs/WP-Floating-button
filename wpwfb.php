@@ -100,8 +100,8 @@ class WordPressFloatingWhatsappButton {
 
 	public function wordpress_floating_whatsapp_button_add_plugin_page() {
 		add_menu_page(
-			'WordPress Floating Whatsapp button', // page_title
-			'Whatsapp button', // menu_title
+			'WP Floating  button', // page_title
+			'Floating  button', // menu_title
 			'manage_options', // capability
 			'wordpress-floating-whatsapp-button', // menu_slug
 			array( $this, 'wordpress_floating_whatsapp_button_create_admin_page' ), // function
